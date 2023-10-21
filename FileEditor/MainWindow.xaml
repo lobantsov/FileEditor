@@ -1,0 +1,69 @@
+﻿<Window x:Class="FileEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:FileEditor"
+        xmlns:mdi="http://schemas.xceed.com/wpf/xaml/mdi"
+        xmlns:fileEditor="clr-namespace:FileEditor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1080" Width="1980" WindowState="Maximized" ResizeMode="NoResize">
+    <Grid Name="MainGrid">
+        <Menu Name="MainMenu" VerticalAlignment="Top" Grid.ColumnSpan="100" Background="LightGray" FontSize="15" Height="20">
+            <MenuItem Name="MILogin" Header="_Login" Click="MenuItem_OnClick" VerticalAlignment="Center" />
+            <MenuItem Name="MILogount" Header="_Logout" VerticalAlignment="Center" Tag="1"  Visibility="Collapsed" Click="MILogount_OnClick" />
+            <MenuItem Name="MIManageRole" Header="Role Manage" VerticalAlignment="Center" Tag="3" Visibility="Collapsed" Click="MIManageRole_OnClick" />
+            <MenuItem Name="MISaveFile" Header="Save file" VerticalAlignment="Center" Tag="1" Visibility="Collapsed"/>
+            <MenuItem Name="MIEditShema" Header="Edit template" VerticalAlignment="Center" Tag="2" Visibility="Collapsed"/>
+        </Menu>
+        <Grid Name="GridUserManage" Grid.Column="0" Tag="1" Visibility="Collapsed" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="600"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="TBSearch" Grid.Row="0" Margin="0 20 0 0" materialDesign:HintAssist.Hint="Пошук" FontSize="20" TextChanged="TBSearch_OnTextChanged" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+            <DataGrid x:Name="DGUserInfo" AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="1"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                      VerticalAlignment="Top">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ПІБ" Binding="{Binding Name}" Width="Auto" />
+                    <DataGridTextColumn Header="Mail" Binding="{Binding Email}" Width="Auto" />
+                    <DataGridTextColumn Header="Посада" Binding="{Binding Position}" Width="Auto" />
+                    <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="Auto" IsReadOnly="False"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="BTDeleteUser"  Content="Видалити" Click="BTDeleteUser_OnClick"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="57*"/>
+                    <RowDefinition Height="130*"/>
+                </Grid.RowDefinitions>
+                <TextBox Name="TBName" Grid.Row="0" Grid.Column="0" Height="30" Margin="20,0,20,0" VerticalAlignment="Bottom"/>
+                <TextBox Name="TBMail" Grid.Row="0" Grid.Column="1" Height="30" Margin="20,0,20,0" VerticalAlignment="Bottom"/>
+                <TextBox Name="TBPosition" Grid.Row="0" Grid.Column="2" Height="30" VerticalAlignment="Bottom" Margin="20,0,20,0"/>
+                <ComboBox Name="CBRole" Grid.Row="0" Grid.Column="3"  VerticalAlignment="Bottom"/>
+            </Grid>
+        </Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="600"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+</Window>
