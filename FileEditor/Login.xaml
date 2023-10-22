@@ -6,14 +6,16 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FileEditor"
         mc:Ignorable="d"
-        Title="Login" Height="700" Width="800">
+        Title= "Login" Height="700" Width="800"
+        Name="WinLogin"
+        KeyDown="Login_OnKeyDown">
     <Grid Background="LightGray">
         <Border MinWidth="400" MaxWidth="550" Margin="20" Background="DarkGray" VerticalAlignment="Center" 
                 Padding="50" CornerRadius="20">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="30" Color="DimGray" ShadowDepth="0" />
             </Border.Effect>
-            <StackPanel>
+            <StackPanel Name="SPColection">
                 <TextBlock FontSize="30" Text="Вітаю!" FontWeight="Bold" Margin="0 10"/>
                 <Grid Name="GridButtons" Margin="0 0 0 20" Visibility="Visible">
                     <Button Name="BTRegistration" HorizontalAlignment="Left" Content="Реєстрація" FontSize="15" Click="BTRegistration_OnClick"/>
@@ -52,29 +54,35 @@
                     <CheckBox x:Name="CBPasswordShowLogin" HorizontalAlignment="Left" Margin="-10 -190 0 0" Height="20"/>
                 </StackPanel>
                 <StackPanel Name="SPForgotPassword" Visibility="Collapsed">
-                    <TextBox x:Name="TBEmailForgotPassword" materialDesign:HintAssist.Hint="Введіть пошту" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                    <Label Name="LBRememberPassword" Content="Згадали пароль?" FontSize="17" HorizontalAlignment="Right" MouseDown="LBRememberPassword_OnMouseDown">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Foreground" Value="DarkBlue" />
-                                        <Setter Property="Cursor" Value="Hand" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Button Name="BTResetPassword" Content="Відновити пароль" FontSize="15" Margin="0 15 0 0" Click="BTResetPassword_OnClick"/>
+                    <StackPanel>
+                        <TextBox x:Name="TBEmailForgotPassword" materialDesign:HintAssist.Hint="Введіть пошту" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <Label Name="LBRememberPassword" Content="Згадали пароль?" FontSize="17" HorizontalAlignment="Right" MouseDown="LBRememberPassword_OnMouseDown">
+                            <Label.Style>
+                                <Style TargetType="Label">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="DarkBlue" />
+                                            <Setter Property="Cursor" Value="Hand" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Button Name="BTResetPassword" Content="Відновити пароль" FontSize="15" Margin="0 15 0 0" Click="BTResetPassword_OnClick"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Name="SPConfirmReg" Visibility="Collapsed">
+                    <StackPanel>
                         <TextBox x:Name="TBKeyConfirm" materialDesign:HintAssist.Hint="Введіть ключ" FontSize="20" TextInput="TBKeyConfirm_OnTextInput" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                    <Button Content="Підтвердити" FontSize="15" Margin="0 15 0 0" Click="BTConfirmMailKey_OnClick"/>
+                        <Button Content="Підтвердити" FontSize="15" Margin="0 15 0 0" Click="BTConfirmMailKey_OnClick"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Name="SPSetNewPassword" Visibility="Collapsed">
-                    <PasswordBox Name="TBNewPassword" materialDesign:HintAssist.Hint="Введіть новий пароль" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
-                    <PasswordBox Name="TBNewPasswordAgain" materialDesign:HintAssist.Hint="Пітвердіть новий пароль" FontSize="20" PasswordChanged="TBPassword_OnPasswordChanged" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
-                    <Button Name="BTConfirnUpdataPassword" Content="Підтвердити" FontSize="15" Margin="0 15 0 0" Click="BTConfirnUpdataPassword_OnClick"/>
+                    <StackPanel>
+                        <PasswordBox Name="TBNewPassword" materialDesign:HintAssist.Hint="Введіть новий пароль" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+                        <PasswordBox Name="TBNewPasswordAgain" materialDesign:HintAssist.Hint="Пітвердіть новий пароль" FontSize="20" PasswordChanged="TBPassword_OnPasswordChanged" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+                        <Button Name="BTConfirnUpdataPassword" Content="Підтвердити" FontSize="15" Margin="0 15 0 0" Click="BTConfirnUpdataPassword_OnClick"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Border>

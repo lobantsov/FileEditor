@@ -57,6 +57,7 @@ namespace FileEditor
         {
             ByModerator.DeleteRecord("UserTable");
             ByModerator.Reconect();
+            ByModerator.ClearText();
         }
         private void TBSearch_OnTextChanged(object sender, TextChangedEventArgs e)
         {

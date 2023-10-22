@@ -4,18 +4,26 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 public class EmailService
 {
     private string key = "";
-    private readonly char[] sybChars =
-    {
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
-        'v', 'w', 'x', 'y', 'z'
-    };
+    private  char[] sybChars;
 
     public async Task SendMessageAsync(string mail)
     {
+        sybChars = mail.ToCharArray();
+        string mailWithoutAt = new string(sybChars);
+        int atIndex = mailWithoutAt.IndexOf('@');
+
+        if (atIndex >= 0)
+        {
+            mailWithoutAt = mailWithoutAt.Substring(0, atIndex); // Видаляємо все після символа "@"
+            mailWithoutAt = Regex.Replace(mailWithoutAt, "[^a-zA-Z]", "");
+        }
+            sybChars = mailWithoutAt.ToCharArray();
+
         var message = new MailMessage
         {
             From = new MailAddress("lobanszov.aleksei2@gmail.com", "Sender"),
@@ -44,10 +52,24 @@ public class EmailService
 
     private string CreateKey()
     {
-        for (int i = 0; i < 10; i++)
+        Random random = new Random();
+        int digitCount = 0;
+        for (int i = 0; i < 7; i++)
         {
             key += sybChars[new Random().Next(0, sybChars.Length)];
         }
+        while (digitCount < 4)
+        {
+            char randomChar = (char)random.Next(48, 58);
+            int insertIndex = random.Next(0, key.Length + 1);
+
+            if (insertIndex == key.Length || !char.IsDigit(key[insertIndex]))
+            {
+                key = key.Insert(insertIndex, randomChar.ToString());
+                digitCount++;
+            }
+        }
+        key = key.ToUpper();
         return key;
     }
 

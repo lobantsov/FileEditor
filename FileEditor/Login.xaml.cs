@@ -27,6 +27,7 @@ namespace FileEditor
             dbManager = DBManager.getInstance(
                 @"Server=localhost;Database=working_programs_kfkte;Uid=root;Pwd=LAS03312005LAS");
         }
+
         private void VisibilitySetings(object sender, bool modeButton = false)
         {
             SPLogin.Visibility = Visibility.Collapsed;
@@ -44,6 +45,7 @@ namespace FileEditor
             }
 
         }
+
         private void BTRegistration_OnClick(object sender, RoutedEventArgs e)
         {
             VisibilitySetings(SPRegistration, true);
@@ -51,6 +53,7 @@ namespace FileEditor
             BTLogin.Style = (Style)FindResource("MaterialDesignFlatButton");
             BTRegistration.Style = reg;
         }
+
         private void BTLogin_OnClick(object sender, RoutedEventArgs e)
         {
             VisibilitySetings(SPLogin, true);
@@ -59,14 +62,17 @@ namespace FileEditor
             BTLogin.Style = reg;
             BTRegistration.Style = (Style)FindResource("MaterialDesignFlatButton");
         }
+
         private void LBForgotpasswor_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             VisibilitySetings(SPForgotPassword);
         }
+
         private void LBRememberPassword_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             VisibilitySetings(SPLogin, true);
         }
+
         private async void BTRegist_OnClick(object sender, RoutedEventArgs e)
         {
             if (!dbManager.ExistRecord("UserTable", TBEmailReg.Text))
@@ -110,6 +116,7 @@ namespace FileEditor
                 MessageBox.Show("Такий користувач вже існує");
             }
         }
+
         private void TBPasswordAgainReg_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             passwprdAgain = TBPasswordAgainReg.Password.Trim();
@@ -122,10 +129,12 @@ namespace FileEditor
                 ((PasswordBox)sender).Foreground = Brushes.Black;
             }
         }
+
         private void TBPasswordReg_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             password = TBPasswordReg.Password.Trim();
         }
+
         private void BTConfirmMailKey_OnClick(object sender, RoutedEventArgs e)
         {
             if (service.CheckPasswords(TBKeyConfirm.Text))
@@ -152,17 +161,19 @@ namespace FileEditor
                 TBKeyConfirm.Foreground = Brushes.DarkRed;
             }
         }
+
         private void TBKeyConfirm_OnTextInput(object sender, TextCompositionEventArgs e)
         {
             TBKeyConfirm.Foreground = Brushes.Black;
         }
+
         private void BTRunLogin_OnClick(object sender, RoutedEventArgs e)
         {
             if (dbManager.ExistRecord("UserTable", TBEmail.Text))
             {
                 var Record = dbManager.selectAll("UserTable", TBEmail.Text);
                 var password = service.HashPassword(TBPassword.Password);
-                for (int i = 0; i < password.Length-1; i++)
+                for (int i = 0; i < password.Length - 1; i++)
                 {
                     if (password[i] == ((byte[])Record[^1])[i])
                     {
@@ -182,7 +193,7 @@ namespace FileEditor
                 }
                 else
                 {
-                    TBPassword.Foreground= Brushes.DarkRed;
+                    TBPassword.Foreground = Brushes.DarkRed;
                 }
             }
             else
@@ -190,6 +201,7 @@ namespace FileEditor
                 MessageBox.Show("Ви не зареєстровані");
             }
         }
+
         private async void BTResetPassword_OnClick(object sender, RoutedEventArgs e)
         {
             if (dbManager.ExistRecord("UserTable", TBEmailForgotPassword.Text))
@@ -200,6 +212,7 @@ namespace FileEditor
                 await service.SendMessageAsync(TBEmailForgotPassword.Text.ToLower());
             }
         }
+
         private void BTConfirnUpdataPassword_OnClick(object sender, RoutedEventArgs e)
         {
             if (TBNewPassword.Password == TBNewPasswordAgain.Password)
@@ -209,13 +222,49 @@ namespace FileEditor
                         $"Mail = '{TBEmailForgotPassword.Text}'"))
                 {
                     MessageBox.Show("Пароль успішно змінений");
-                    VisibilitySetings(SPLogin,true);
+                    VisibilitySetings(SPLogin, true);
                 }
             }
         }
+
         private void TBPassword_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             ((PasswordBox)sender).Foreground = Brushes.Black;
+        }
+
+        private Button CurrentStackPanel()
+        {
+            foreach (var children in WinLogin.SPColection.Children)
+            {
+                if (children is StackPanel)
+                {
+                    if (((StackPanel)children).Visibility == Visibility.Visible)
+                    {
+                        foreach (var stackPanelButtons in ((StackPanel)children).Children)
+                        {
+                            if (stackPanelButtons is StackPanel)
+                                foreach (var VARIABLE in ((StackPanel)stackPanelButtons).Children)
+                                {
+                                    if (VARIABLE is Button)
+                                    {
+                                        return ((Button)VARIABLE);
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void Login_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Button currentButton = CurrentStackPanel();
+                RoutedEventArgs ee = new RoutedEventArgs(Button.ClickEvent, currentButton);
+                currentButton.RaiseEvent(ee);
+            }
         }
     }
 }

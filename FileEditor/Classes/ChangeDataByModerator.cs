@@ -36,7 +36,6 @@ namespace FileEditor.Classes
             {
                 comboBox.Items.Add(roleTabel[i][1]);
             }
-
         }
 
         public void Reconect()
@@ -110,8 +109,19 @@ namespace FileEditor.Classes
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dbManager.Update("UserTable", "UserRole", comboBox.SelectedIndex+1, $"Mail = '{textBoxes[1].Text}'");
+            if (comboBox.SelectedIndex.ToString() != "-1") 
             userInfos[rowPosition].Role = comboBox.SelectedItem.ToString();
-            dataGrid.Items.Refresh();
+            Reconect();
+        }
+
+        public void ClearText()
+        {
+            foreach (var VARIABLE in textBoxes)
+            {
+                VARIABLE.Text = string.Empty;
+            }
+
+            comboBox.SelectedIndex = -1;
         }
     }
 }
