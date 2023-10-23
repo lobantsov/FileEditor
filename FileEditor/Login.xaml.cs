@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace FileEditor
 {
@@ -232,7 +233,7 @@ namespace FileEditor
             ((PasswordBox)sender).Foreground = Brushes.Black;
         }
 
-        private Button CurrentStackPanel()
+        private StackPanel CurrentStackPanel()
         {
             foreach (var children in WinLogin.SPColection.Children)
             {
@@ -243,13 +244,9 @@ namespace FileEditor
                         foreach (var stackPanelButtons in ((StackPanel)children).Children)
                         {
                             if (stackPanelButtons is StackPanel)
-                                foreach (var VARIABLE in ((StackPanel)stackPanelButtons).Children)
-                                {
-                                    if (VARIABLE is Button)
-                                    {
-                                        return ((Button)VARIABLE);
-                                    }
-                                }
+                            {
+                                return ((StackPanel)stackPanelButtons);
+                            }
                         }
                     }
                 }
@@ -259,12 +256,59 @@ namespace FileEditor
 
         private void Login_OnKeyDown(object sender, KeyEventArgs e)
         {
+            Button currentButton = new Button();
             if (e.Key == Key.Enter)
             {
-                Button currentButton = CurrentStackPanel();
+                StackPanel stackPanel = CurrentStackPanel();
+                foreach (var VARIABLE in stackPanel.Children)
+                {
+                    if (VARIABLE is Button)
+                    {
+                        currentButton = ((Button)VARIABLE);
+                    }
+                }
                 RoutedEventArgs ee = new RoutedEventArgs(Button.ClickEvent, currentButton);
                 currentButton.RaiseEvent(ee);
             }
+        }
+
+        private void PasswordVisibility(bool mode, object sender)
+        {
+            Visibility visible1;
+            Visibility visible2;
+            if (mode)
+            {
+                visible1=Visibility.Visible;
+                visible2 = Visibility.Collapsed;
+            }
+            else
+            {
+                visible2 = Visibility.Visible;
+                visible1 = Visibility.Collapsed;
+            }
+            StackPanel stackPanel = CurrentStackPanel();
+            foreach (var VARIABLE in stackPanel.Children)
+            {
+                if (VARIABLE is PasswordBox && ((CheckBox)sender).Tag.ToString() == ((PasswordBox)VARIABLE).Tag.ToString())
+                {
+                    ((PasswordBox)VARIABLE).Visibility = visible2;
+                }
+
+                if (VARIABLE is TextBox && ((TextBox)VARIABLE).Tag.ToString() == ((CheckBox)sender).Tag.ToString())
+                {
+                    ((TextBox)VARIABLE).Text = TBPasswordReg.Password;
+                    ((TextBox)VARIABLE).Visibility = visible1;
+                }
+            }
+        }
+        private void CBPasswordShow_OnChecked(object sender, RoutedEventArgs e)
+        {
+            PasswordVisibility(true, sender);
+        }
+
+        private void CBPasswordShow_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            PasswordVisibility(false, sender);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using FileEditor.Classes;
 using Xceed.Wpf.Toolkit;
@@ -28,6 +29,16 @@ namespace FileEditor
                 @"Server=localhost;Database=working_programs_kfkte;Uid=root;Pwd=LAS03312005LAS");
             menuControler = new MenuControler(MainMenu);
             ByModerator = new ChangeDataByModerator(DGUserInfo,new TextBox[]{TBName,TBMail,TBPosition},CBRole);
+
+
+            Paragraph paragraph = new Paragraph();
+
+            // Додаємо текст до параграфа
+            Run run = new Run("Це текст у параграфі.");
+            paragraph.Inlines.Add(run);
+
+            // Додаємо параграф до FlowDocument
+            Document.Blocks.Add(paragraph);
         }
         
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)

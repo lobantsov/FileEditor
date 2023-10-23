@@ -60,6 +60,9 @@
                 <ComboBox Name="CBRole" Grid.Row="0" Grid.Column="3"  VerticalAlignment="Bottom"/>
             </Grid>
         </Grid>
+        <FlowDocumentReader>
+            <FlowDocument Name="Document"/>
+        </FlowDocumentReader>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

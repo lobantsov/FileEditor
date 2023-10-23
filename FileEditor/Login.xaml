@@ -23,21 +23,26 @@
                 </Grid>
                 <StackPanel Name="SPRegistration" Visibility="Visible">
                     <StackPanel Margin="20 0 0 0">
-                        <TextBox x:Name="TBLoginReg" materialDesign:HintAssist.Hint="Ваше повне ім'я" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                        <TextBox Name="TBPositionReg"  materialDesign:HintAssist.Hint="Ваша посада" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox x:Name="TBEmailReg" materialDesign:HintAssist.Hint="Введіть пошту" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                        <PasswordBox x:Name="TBPasswordReg" materialDesign:HintAssist.Hint="Придумайте пароль" FontSize="20" PasswordChanged="TBPasswordReg_OnPasswordChanged"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
-                        <PasswordBox x:Name="TBPasswordAgainReg" materialDesign:HintAssist.Hint="Повторіть пароль" FontSize="20" PasswordChanged="TBPasswordAgainReg_OnPasswordChanged" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
-                        <Button Name="BTRegist" Content="Зареєстуватись" FontSize="15" Margin="0 15 0 0" Click="BTRegist_OnClick"/>
+                        <TextBox x:Name="TBLoginReg" Tag="-1" materialDesign:HintAssist.Hint="Ваше повне ім'я" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <TextBox Name="TBPositionReg" Tag="-1" materialDesign:HintAssist.Hint="Ваша посада" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox x:Name="TBEmailReg" Tag="-1" materialDesign:HintAssist.Hint="Введіть пошту" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        
+                        <PasswordBox x:Name="TBPasswordReg" Tag="1" materialDesign:HintAssist.Hint="Придумайте пароль" FontSize="20" PasswordChanged="TBPasswordReg_OnPasswordChanged"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                        <TextBox Name="TextBoxPassword" Tag="1" Visibility="Collapsed" FontSize="20" materialDesign:HintAssist.Hint="Придумайте пароль" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <PasswordBox x:Name="TBPasswordAgainReg" Tag="2" materialDesign:HintAssist.Hint="Повторіть пароль" FontSize="20" PasswordChanged="TBPasswordAgainReg_OnPasswordChanged" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
+                        <TextBox Name="TextBoxPasswordAgain" Tag="2" Visibility="Collapsed" FontSize="20" materialDesign:HintAssist.Hint="Повторіть пароль" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+                        <Button Name="BTRegist" Tag="-1" Content="Зареєстуватись" FontSize="15" Margin="0 15 0 0" Click="BTRegist_OnClick"/>
                     </StackPanel>
-                    <CheckBox x:Name="CBPasswordShow" HorizontalAlignment="Left" Margin="-10 -230 0 0" Height="20"/>
-                    <CheckBox x:Name="CBPasswordShow2" HorizontalAlignment="Left" Margin="-10 -120 0 0" Height="28"/>
+                    <CheckBox x:Name="CBPasswordShow" Tag="1" HorizontalAlignment="Left" Margin="-10 -230 0 0" Height="20" Checked="CBPasswordShow_OnChecked" Unchecked="CBPasswordShow_OnUnchecked"/>
+                    <CheckBox x:Name="CBPasswordShow2" Tag="2" HorizontalAlignment="Left" Margin="-10 -120 0 0" Height="28" Checked="CBPasswordShow_OnChecked" Unchecked="CBPasswordShow_OnUnchecked"/>
                 </StackPanel>
                 <StackPanel Name="SPLogin" Visibility="Collapsed">
                     <StackPanel Margin="20 0 0 0">
-                        <TextBox x:Name="TBEmail" materialDesign:HintAssist.Hint="Введіть пошту" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                        <PasswordBox x:Name="TBPassword" materialDesign:HintAssist.Hint="Введіть пароль" PasswordChanged="TBPassword_OnPasswordChanged" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
-                        <Label Name="LBForgotPassword" Content="Забули пароль?" FontSize="17" HorizontalAlignment="Right" MouseDown="LBForgotpasswor_OnMouseDown">
+                        <TextBox x:Name="TBEmail" Tag="-1" materialDesign:HintAssist.Hint="Введіть пошту" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <PasswordBox x:Name="TBPassword" Tag="3" materialDesign:HintAssist.Hint="Введіть пароль" PasswordChanged="TBPassword_OnPasswordChanged" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                        <TextBox Name="TextBoxPasswordLog" Tag="3" Visibility="Collapsed" FontSize="20" materialDesign:HintAssist.Hint="Придумайте пароль" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <Label Name="LBForgotPassword" Tag="-1" Content="Забули пароль?" FontSize="17" HorizontalAlignment="Right" MouseDown="LBForgotpasswor_OnMouseDown">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
@@ -49,9 +54,9 @@
                                 </Style>
                             </Label.Style>
                         </Label>
-                        <Button Name="BTRunLogin" Content="Вхід" FontSize="15" Margin="0 15 0 0" Click="BTRunLogin_OnClick"/>
+                        <Button Name="BTRunLogin" Tag="-1" Content="Вхід" FontSize="15" Margin="0 15 0 0" Click="BTRunLogin_OnClick"/>
                     </StackPanel>
-                    <CheckBox x:Name="CBPasswordShowLogin" HorizontalAlignment="Left" Margin="-10 -190 0 0" Height="20"/>
+                    <CheckBox x:Name="CBPasswordShowLogin" Tag="3" HorizontalAlignment="Left" Margin="-10 -190 0 0" Height="20" Checked="CBPasswordShow_OnChecked" Unchecked="CBPasswordShow_OnUnchecked"/>
                 </StackPanel>
                 <StackPanel Name="SPForgotPassword" Visibility="Collapsed">
                     <StackPanel>
