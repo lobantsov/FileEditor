@@ -104,12 +104,13 @@ namespace FileEditor.Classes
         public void DeleteRecord(string TableName)
         {
             dbManager.delete(TableName, $"Mail = '{userInfo.Email}'");
+            rowPosition = 0;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dbManager.Update("UserTable", "UserRole", comboBox.SelectedIndex+1, $"Mail = '{textBoxes[1].Text}'");
-            if (comboBox.SelectedIndex.ToString() != "-1") 
+            if (comboBox.SelectedIndex.ToString() != "-1" && rowPosition > -1)  
             userInfos[rowPosition].Role = comboBox.SelectedItem.ToString();
             Reconect();
         }

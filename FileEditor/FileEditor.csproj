@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\PictogramList.png" />
+    <None Remove="Resources\PictogramList_Number.png" />
+    <None Remove="Resources\PictogramText_Centure.png" />
+    <None Remove="Resources\PictogramText_Left.png" />
+    <None Remove="Resources\PictogramText_Right.png" />
+    <None Remove="Resources\PitogramText.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.1" />
     <PackageReference Include="MailKit" Version="4.2.0" />
     <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
@@ -20,6 +29,27 @@
     <Reference Include="MySql.Data">
       <HintPath>C:\Users\loban\Downloads\Telegram Desktop\MySql.Data.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\PictogramList.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\PictogramList_Number.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\PictogramText_Centure.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\PictogramText_Left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\PictogramText_Right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\PitogramText.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
