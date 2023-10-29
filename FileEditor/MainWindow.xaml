@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:FileEditor"
-        xmlns:mdi="http://schemas.xceed.com/wpf/xaml/mdi"
-        xmlns:fileEditor="clr-namespace:FileEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1980" WindowState="Maximized" ResizeMode="NoResize"
-        Name="Window">
+        Name="Window"
+        MouseDown="Canvas_OnMouseDown">
     <Grid Name="MainGrid">
+
         <Menu Name="MainMenu" VerticalAlignment="Top" Grid.ColumnSpan="100" Background="LightGray" FontSize="15" Height="20">
             <MenuItem Name="MILogin" Header="_Login" Click="MenuItem_OnClick" VerticalAlignment="Center" />
             <MenuItem Name="MILogount" Header="_Logout" VerticalAlignment="Center" Tag="1"  Visibility="Collapsed" Click="MILogount_OnClick" />
@@ -61,6 +61,8 @@
                 <ComboBox Name="CBRole" Grid.Row="0" Grid.Column="3"  VerticalAlignment="Bottom"/>
             </Grid>
         </Grid>
+
+
 
         <Grid Name="GridConstruction" Margin="0 25 0 0">
            
@@ -216,7 +218,6 @@
                 </ToggleButton>
 
             </StackPanel>
-
                     <ToolBar VerticalAlignment="Top">
                         <Button Command="Copy" Content="Coppy"/>
                         <Button Command="Paste" Content="Paste"/>
@@ -229,15 +230,7 @@
                         <Button Command="ToggleBullets" FontStyle="Italic" Content="List"/>
                         <Button Command="ToggleNumbering" FontStyle="Italic" Content="List"/>
             </ToolBar>
-
-            <FlowDocumentPageViewer Name="FlowDocumentPageViewer" Grid.Column="0" Margin="0,59,0,0">
-                <FlowDocument Name="FlowDocument" MouseDown="FlowDocument_OnMouseDown">
-                    <BlockUIContainer>
-                        <RichTextBox Name="RTBEditText" Visibility="Collapsed"/>
-                    </BlockUIContainer>
-                </FlowDocument>
-            </FlowDocumentPageViewer>
-
+            <Canvas Name="Canvas" Margin="0 60 0 0" MouseDown="Canvas_OnMouseDown"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="550"/>
