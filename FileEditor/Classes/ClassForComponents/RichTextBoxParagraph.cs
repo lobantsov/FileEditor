@@ -17,8 +17,8 @@ namespace FileEditor.Classes.ClassForComponents
     {
         private RichTextBox richTextBox;
         public static Canvas Canvas;
-        private ResizeAborner objectiv;
-        private Adorner a;
+        public ResizeAborner objectiv;
+        public static List<RichTextBoxParagraph> TextBoxParagraphs;
 
         public void CreateRichTextBox(System.Windows.Point location)
         {
@@ -31,49 +31,48 @@ namespace FileEditor.Classes.ClassForComponents
             Canvas.SetLeft(richTextBox, location.X);
             Canvas.SetTop(richTextBox, location.Y);
             Canvas.Children.Add(richTextBox);
+            objectiv = new ResizeAborner(richTextBox);
         }
 
         private void RichTextBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            objectiv = new ResizeAborner(richTextBox);
+            if (!TextBoxParagraphs.Contains(this))
+            {
+                AdornerLayer.GetAdornerLayer(Canvas).Add(objectiv);
+                TextBoxParagraphs.Add(this);
+            }
             objectiv.AbornerVisibility(Visibility.Visible);
-            AdornerLayer.GetAdornerLayer(Canvas).Add(objectiv);
-
         }
 
-        private void RemoveAdornerAll()
+        public static void RemoveAdornerAll(RichTextBox rich)
         {
-            objectiv = null;
-            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(Canvas);
-
-            Adorner[] adorners = adornerLayer.GetAdorners(Canvas);
-            if (adorners != null)
+            if (rich != null)
             {
-                foreach (Adorner adorner in adorners)
+                var a = AdornerLayer.GetAdornerLayer(Canvas).GetAdorners(rich);
+                if (a != null)
                 {
-                    adornerLayer.Remove(adorner);
+                    foreach (var VARIABLE in a)
+                    {
+                        AdornerLayer.GetAdornerLayer(Canvas).Remove(VARIABLE);
+
+                    }
                 }
             }
         }
 
-        private void RichTextBox_LostFocus(object sender, RoutedEventArgs e)
+        public void RichTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            AdornerLayer.GetAdornerLayer(Canvas).Remove(objectiv);
+            objectiv.AbornerVisibility(Visibility.Collapsed);
         }
 
-        public RichTextBox GetRichTextBox()
+        public void SetTagRichTextBox(int i)
         {
-            return richTextBox;
-        }
-
-        public Adorner GetAdorner()
-        {
-            return objectiv;
+            richTextBox.Tag = i;
         }
 
         public void Dispose()
         {
-            richTextBox = null;
+
         }
     }
 }

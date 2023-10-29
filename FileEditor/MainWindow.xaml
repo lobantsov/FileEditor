@@ -224,11 +224,11 @@
                         <Button Command="Cut" Content="Cut"/>
                         <Button Command="ToggleBold" FontWeight="Bold" Content="B"/>
                         <Button Command="ToggleUnderline" >
-                             <TextBox TextDecorations="Underline" IsReadOnly="True">U</TextBox>
+                             <TextBox Name="TBUnderline" TextDecorations="Underline" IsReadOnly="True">U</TextBox>
                         </Button>
                         <Button Command="ToggleItalic" FontStyle="Italic" Content="I"/>
-                        <Button Command="ToggleBullets" FontStyle="Italic" Content="List"/>
-                        <Button Command="ToggleNumbering" FontStyle="Italic" Content="List"/>
+                        <Button Command="ToggleBullets" Content="Buble list"/>
+                        <Button Command="ToggleNumbering" Content="Number list"/>
             </ToolBar>
             <Canvas Name="Canvas" Margin="0 60 0 0" MouseDown="Canvas_OnMouseDown"/>
             <Grid.ColumnDefinitions>

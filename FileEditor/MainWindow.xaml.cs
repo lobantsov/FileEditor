@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -20,7 +21,7 @@ namespace FileEditor
         MenuControler menuControler;
         private ChangeDataByModerator ByModerator;
         private int i = 0;
-        private RichTextBoxParagraph TextBoxParagraph;
+        private List<RichTextBoxParagraph> TextBoxParagraphs = new List<RichTextBoxParagraph>();
 
         public MainWindow()
         {
@@ -29,9 +30,8 @@ namespace FileEditor
                 @"Server=localhost;Database=working_programs_kfkte;Uid=root;Pwd=LAS03312005LAS");
             menuControler = new MenuControler(MainMenu);
             ByModerator = new ChangeDataByModerator(DGUserInfo, new TextBox[] { TBName, TBMail, TBPosition }, CBRole);
-            TextBoxParagraph = new RichTextBoxParagraph();
             RichTextBoxParagraph.Canvas = Canvas;
-
+            RichTextBoxParagraph.TextBoxParagraphs = TextBoxParagraphs;
         }
 
 
@@ -105,11 +105,20 @@ namespace FileEditor
 
         private void Canvas_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
+            foreach (var VARIABLE in TextBoxParagraphs)
+            {
+                VARIABLE.objectiv.AbornerVisibility(Visibility.Collapsed);
+            }
             if (ToggleButtonText.IsChecked == true)
             {
-                TextBoxParagraph.CreateRichTextBox(e.GetPosition(Canvas));
+                using (var textBox = new RichTextBoxParagraph())
+                {
+                    textBox.CreateRichTextBox(e.GetPosition(Canvas));
+                }
+               
             }
 
+            i++;
             ToggleButtonText.IsChecked = false;
         }
     }
