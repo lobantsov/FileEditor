@@ -16,14 +16,14 @@ using Size = System.Windows.Size;
 
 namespace FileEditor.Classes.ClassForComponents
 {
-    public class ResizeAborner : Adorner
+    public class AdornerReSizeLocation : Adorner
     {
         private VisualCollection VisualCollection;
         private Thumb ThumbLeftTop;
         private Thumb ThumbRightBottom;
         private Thumb ThumbResize;
         private Rectangle rectangle;
-        public ResizeAborner(UIElement adornerUiElement) : base(adornerUiElement)
+        public AdornerReSizeLocation(UIElement adornerUiElement) : base(adornerUiElement)
         {
             VisualCollection = new VisualCollection(this);
             ThumbLeftTop = new Thumb() { Background = Brushes.Coral, Height = 10, Width = 10 };
@@ -82,7 +82,7 @@ namespace FileEditor.Classes.ClassForComponents
         {
             var element = (FrameworkElement)AdornedElement;
 
-            element.Height = element.Height + e.VerticalChange < 0 ? 0 : element.Height + e.VerticalChange;
+            //element.Height = element.Height + e.VerticalChange < 0 ? 0 : element.Height + e.VerticalChange;
             element.Width = element.Width + e.HorizontalChange < 0 ? 0 : element.Width + e.HorizontalChange;
         }
 
@@ -91,12 +91,12 @@ namespace FileEditor.Classes.ClassForComponents
             var element = (FrameworkElement)AdornedElement;
             if(element.Width>0)
             Canvas.SetLeft(element,Canvas.GetLeft(element)+e.HorizontalChange);
-            if(element.Height>0)
-            Canvas.SetTop(element,Canvas.GetTop(element)+e.VerticalChange);
+            //if(element.Height>0)
+            //Canvas.SetTop(element,Canvas.GetTop(element)+e.VerticalChange);
 
             Point j = new Point(element.Width, element.Width);
 
-            element.Height = element.Height - e.VerticalChange < 0 ? 0 : element.Height - e.VerticalChange;
+            //element.Height = element.Height - e.VerticalChange < 0 ? 0 : element.Height - e.VerticalChange;
             element.Width = element.Width - e.HorizontalChange < 0 ? 0 : element.Width - e.HorizontalChange;
         }
 
@@ -122,6 +122,11 @@ namespace FileEditor.Classes.ClassForComponents
             ThumbRightBottom.Visibility = visibleMode;
             ThumbLeftTop.Visibility = visibleMode;
             rectangle.Visibility = visibleMode;
+        }
+
+        public Visibility GetAdornerdVisibility()
+        {
+            return ThumbResize.Visibility;
         }
     }
 }

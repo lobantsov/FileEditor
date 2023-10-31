@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,17 +9,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using MailKit;
 using Microsoft.Xaml.Behaviors.Layout;
 
 namespace FileEditor.Classes.ClassForComponents
 {
     public class RichTextBoxParagraph : IDisposable
     {
-        private RichTextBox richTextBox;
+        public RichTextBox richTextBox;
         public static Canvas Canvas;
-        public ResizeAborner objectiv;
+        private AdornerReSizeLocation objectiv;
         public static List<RichTextBoxParagraph> TextBoxParagraphs;
+        public static ComboBox ComboBox;
+        private bool IsAdded;
 
         public void CreateRichTextBox(System.Windows.Point location)
         {
@@ -26,21 +31,32 @@ namespace FileEditor.Classes.ClassForComponents
             richTextBox.Width = 300;
             richTextBox.Height = 25;
             richTextBox.Style = null;
+            richTextBox.FontFamily = new FontFamily("Times New Roman");
+            richTextBox.FontSize = 12;
             richTextBox.PreviewMouseDown += RichTextBox_MouseDown;
             richTextBox.LostFocus += RichTextBox_LostFocus;
+            richTextBox.PreviewKeyDown += RichTextBox_PreviewKeyDown;
             Canvas.SetLeft(richTextBox, location.X);
             Canvas.SetTop(richTextBox, location.Y);
             Canvas.Children.Add(richTextBox);
-            objectiv = new ResizeAborner(richTextBox);
+            objectiv = new AdornerReSizeLocation(richTextBox);
+            TextBoxParagraphs.Add(this);
+            IsAdded = false;
         }
 
         private void RichTextBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (!TextBoxParagraphs.Contains(this))
+            if (!IsAdded)
             {
                 AdornerLayer.GetAdornerLayer(Canvas).Add(objectiv);
-                TextBoxParagraphs.Add(this);
+                IsAdded = true;
             }
+            foreach (var VARIABLE in TextBoxParagraphs)
+            {
+                VARIABLE.GetAborner().AbornerVisibility(Visibility.Collapsed);
+            }
+
+            ComboBox.SelectedItem = Convert.ToInt32(richTextBox.FontSize);
             objectiv.AbornerVisibility(Visibility.Visible);
         }
 
@@ -68,6 +84,35 @@ namespace FileEditor.Classes.ClassForComponents
         public void SetTagRichTextBox(int i)
         {
             richTextBox.Tag = i;
+        }
+
+        public AdornerReSizeLocation GetAborner()
+        {
+            return objectiv;
+        }
+
+        private void RichTextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Delete)
+            {
+                AdornerLayer.GetAdornerLayer(Canvas).Remove(objectiv);
+                TextBoxParagraphs.Remove(this);
+                Canvas.Children.Remove(richTextBox);
+                richTextBox.LostFocus -= RichTextBox_LostFocus;
+                richTextBox = null;
+                objectiv = null;
+                _resizeRichTextBox = null;
+                this.Dispose();
+            }
+
+            else if (e.Key == Key.Enter)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
         public void Dispose()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -10,6 +11,7 @@ using FileEditor.Classes;
 using FileEditor.Classes.ClassForComponents;
 using Org.BouncyCastle.Utilities;
 using Xceed.Wpf.Toolkit;
+using RichTextBox = System.Windows.Controls.RichTextBox;
 
 
 namespace FileEditor
@@ -20,8 +22,9 @@ namespace FileEditor
         private int roleIndex;
         MenuControler menuControler;
         private ChangeDataByModerator ByModerator;
-        private int i = 0;
         private List<RichTextBoxParagraph> TextBoxParagraphs = new List<RichTextBoxParagraph>();
+        private List<RichTextBox> RichTextBoxes = new List<RichTextBox>();
+        private int i = 0;
 
         public MainWindow()
         {
@@ -32,6 +35,11 @@ namespace FileEditor
             ByModerator = new ChangeDataByModerator(DGUserInfo, new TextBox[] { TBName, TBMail, TBPosition }, CBRole);
             RichTextBoxParagraph.Canvas = Canvas;
             RichTextBoxParagraph.TextBoxParagraphs = TextBoxParagraphs;
+            RichTextBoxParagraph.ComboBox = CBFontSize;
+            CBFontSize.Items.Add(12);
+            CBFontSize.Items.Add(14);
+            CBFontSize.Items.Add(16);
+            CBFontSize.SelectedIndex = 0;
         }
 
 
@@ -107,19 +115,43 @@ namespace FileEditor
         {
             foreach (var VARIABLE in TextBoxParagraphs)
             {
-                VARIABLE.objectiv.AbornerVisibility(Visibility.Collapsed);
+                VARIABLE.GetAborner().AbornerVisibility(Visibility.Collapsed);
             }
             if (ToggleButtonText.IsChecked == true)
             {
                 using (var textBox = new RichTextBoxParagraph())
                 {
                     textBox.CreateRichTextBox(e.GetPosition(Canvas));
+                    textBox.SetTagRichTextBox(i);
                 }
-               
+                i++;
             }
 
-            i++;
             ToggleButtonText.IsChecked = false;
+        }
+
+        private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            //search
+            
+        }
+
+        bool CanChange=false;
+
+        private void CBFontSize_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TextBoxParagraphs.Count > 0) 
+            foreach (var VARIABLE in TextBoxParagraphs)
+            {
+                if (VARIABLE.GetAborner().GetAdornerdVisibility()==Visibility.Visible)
+                {
+                    if (double.TryParse(CBFontSize.SelectedItem.ToString(), out double fontSize))
+                    {
+                        VARIABLE.richTextBox.FontSize = fontSize;
+                    }
+                    break;
+                }
+            }
         }
     }
 

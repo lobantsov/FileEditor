@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1980" WindowState="Maximized" ResizeMode="NoResize"
         Name="Window"
-        MouseDown="Canvas_OnMouseDown">
+        MouseDown="Canvas_OnMouseDown" PreviewKeyDown="MainWindow_OnPreviewKeyDown">
     <Grid Name="MainGrid">
 
         <Menu Name="MainMenu" VerticalAlignment="Top" Grid.ColumnSpan="100" Background="LightGray" FontSize="15" Height="20">
@@ -229,6 +229,7 @@
                         <Button Command="ToggleItalic" FontStyle="Italic" Content="I"/>
                         <Button Command="ToggleBullets" Content="Buble list"/>
                         <Button Command="ToggleNumbering" Content="Number list"/>
+                <ComboBox Name="CBFontSize" SelectedIndex="0" SelectionChanged="CBFontSize_OnSelectionChanged"/>
             </ToolBar>
             <Canvas Name="Canvas" Margin="0 60 0 0" MouseDown="Canvas_OnMouseDown"/>
             <Grid.ColumnDefinitions>
