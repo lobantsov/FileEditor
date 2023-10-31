@@ -10,8 +10,10 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
 using Point = System.Windows.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
+using RichTextBox = System.Windows.Controls.RichTextBox;
 using Size = System.Windows.Size;
 
 namespace FileEditor.Classes.ClassForComponents
@@ -23,7 +25,8 @@ namespace FileEditor.Classes.ClassForComponents
         private Thumb ThumbRightBottom;
         private Thumb ThumbResize;
         private Rectangle rectangle;
-        public AdornerReSizeLocation(UIElement adornerUiElement) : base(adornerUiElement)
+        private Canvas canvas;
+        public AdornerReSizeLocation(UIElement adornerUiElement, Canvas Canvas) : base(adornerUiElement)
         {
             VisualCollection = new VisualCollection(this);
             ThumbLeftTop = new Thumb() { Background = Brushes.Coral, Height = 10, Width = 10 };
@@ -54,6 +57,8 @@ namespace FileEditor.Classes.ClassForComponents
             VisualCollection.Add(rectangle);
 
             AbornerVisibility(Visibility.Collapsed);
+
+            this.canvas = Canvas;
         }
 
         private void ThumbLeftTop_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -81,9 +86,16 @@ namespace FileEditor.Classes.ClassForComponents
         private void ThumbRightBottom_DragDelta(object sender, DragDeltaEventArgs e)
         {
             var element = (FrameworkElement)AdornedElement;
+            double canvasWidth = canvas.ActualWidth; // Отримати ширину
+            double canvasHeight = canvas.ActualHeight; // Отримати висоту
 
             //element.Height = element.Height + e.VerticalChange < 0 ? 0 : element.Height + e.VerticalChange;
             element.Width = element.Width + e.HorizontalChange < 0 ? 0 : element.Width + e.HorizontalChange;
+            if (Canvas.GetLeft(element) + element.Width > canvasWidth)
+            {
+                element.Width = canvasWidth - Canvas.GetLeft(element) - 1;
+            }
+
         }
 
         private void ThumbLeftTop_DragDelta(object sender, DragDeltaEventArgs e)
@@ -93,8 +105,6 @@ namespace FileEditor.Classes.ClassForComponents
             Canvas.SetLeft(element,Canvas.GetLeft(element)+e.HorizontalChange);
             //if(element.Height>0)
             //Canvas.SetTop(element,Canvas.GetTop(element)+e.VerticalChange);
-
-            Point j = new Point(element.Width, element.Width);
 
             //element.Height = element.Height - e.VerticalChange < 0 ? 0 : element.Height - e.VerticalChange;
             element.Width = element.Width - e.HorizontalChange < 0 ? 0 : element.Width - e.HorizontalChange;

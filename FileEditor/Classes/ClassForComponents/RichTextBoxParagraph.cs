@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using MailKit;
 using Microsoft.Xaml.Behaviors.Layout;
+using Point = System.Windows.Point;
 
 namespace FileEditor.Classes.ClassForComponents
 {
@@ -38,10 +39,41 @@ namespace FileEditor.Classes.ClassForComponents
             richTextBox.PreviewKeyDown += RichTextBox_PreviewKeyDown;
             Canvas.SetLeft(richTextBox, location.X);
             Canvas.SetTop(richTextBox, location.Y);
+
+            ValidateLocatoin();
+
             Canvas.Children.Add(richTextBox);
-            objectiv = new AdornerReSizeLocation(richTextBox);
+            objectiv = new AdornerReSizeLocation(richTextBox, Canvas);
             TextBoxParagraphs.Add(this);
             IsAdded = false;
+        }
+
+        private void ValidateLocatoin()
+        {
+            double canvasLeft = 0;
+            double canvasTop = 0;
+            double canvasWidth = Canvas.ActualWidth; // Отримати ширину
+            double canvasHeight = Canvas.ActualHeight; // Отримати висоту
+
+            if (Canvas.GetLeft(richTextBox) < canvasLeft)
+            {
+                Canvas.SetLeft(richTextBox, canvasLeft);
+            }
+
+            if (Canvas.GetTop(richTextBox) < canvasTop)
+            {
+                Canvas.SetTop(richTextBox, canvasTop);
+            }
+
+            if (Canvas.GetLeft(richTextBox)+ richTextBox.Width > canvasWidth)
+            {
+                Canvas.SetLeft(richTextBox, canvasWidth-richTextBox.Width);
+            }
+
+            if (Canvas.GetTop(richTextBox)+richTextBox.Height > canvasHeight)
+            {
+                Canvas.SetTop(richTextBox, canvasHeight-richTextBox.Height-20);
+            }
         }
 
         private void RichTextBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -93,7 +125,7 @@ namespace FileEditor.Classes.ClassForComponents
 
         private void RichTextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Delete)
+            if (e.Key == Key.Delete)
             {
                 AdornerLayer.GetAdornerLayer(Canvas).Remove(objectiv);
                 TextBoxParagraphs.Remove(this);
@@ -101,7 +133,6 @@ namespace FileEditor.Classes.ClassForComponents
                 richTextBox.LostFocus -= RichTextBox_LostFocus;
                 richTextBox = null;
                 objectiv = null;
-                _resizeRichTextBox = null;
                 this.Dispose();
             }
 
