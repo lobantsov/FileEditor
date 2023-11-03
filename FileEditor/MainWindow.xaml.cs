@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using FileEditor.Classes;
 using FileEditor.Classes.ClassForComponents;
+using FileEditor.Classes.SaveDoc;
 using Org.BouncyCastle.Utilities;
 using Xceed.Wpf.Toolkit;
 using RichTextBox = System.Windows.Controls.RichTextBox;
@@ -24,8 +25,8 @@ namespace FileEditor
         MenuControler menuControler;
         private ChangeDataByModerator ByModerator;
         private List<RichTextBoxParagraph> TextBoxParagraphs = new List<RichTextBoxParagraph>();
-        private List<RichTextBox> RichTextBoxes = new List<RichTextBox>();
         private int i = 0;
+        private SaveDocument saveDocument;
 
         public MainWindow()
         {
@@ -35,12 +36,14 @@ namespace FileEditor
             menuControler = new MenuControler(MainMenu);
             ByModerator = new ChangeDataByModerator(DGUserInfo, new TextBox[] { TBName, TBMail, TBPosition }, CBRole);
             RichTextBoxParagraph.Canvas = Canvas;
+            saveDocument = new SaveDocument();
             RichTextBoxParagraph.TextBoxParagraphs = TextBoxParagraphs;
             RichTextBoxParagraph.ComboBox = CBFontSize;
             CBFontSize.Items.Add(12);
             CBFontSize.Items.Add(14);
             CBFontSize.Items.Add(16);
             CBFontSize.SelectedIndex = 0;
+
         }
 
 
@@ -151,6 +154,13 @@ namespace FileEditor
                     break;
                 }
             }
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            saveDocument.SaveFile(TextBoxParagraphs
+                .SelectMany(paragraph => new[] { paragraph.richTextBox })
+                .ToList());
         }
     }
 

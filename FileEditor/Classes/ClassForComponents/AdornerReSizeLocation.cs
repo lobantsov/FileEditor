@@ -11,9 +11,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Xceed.Wpf.Toolkit;
-using Point = System.Windows.Point;
+using Brushes = System.Windows.Media.Brushes;
 using Rectangle = System.Windows.Shapes.Rectangle;
-using RichTextBox = System.Windows.Controls.RichTextBox;
 using Size = System.Windows.Size;
 
 namespace FileEditor.Classes.ClassForComponents
@@ -79,8 +78,23 @@ namespace FileEditor.Classes.ClassForComponents
         {
             var element = (FrameworkElement)AdornedElement;
 
-            Canvas.SetLeft(element,Canvas.GetLeft(element)+e.HorizontalChange);
-            Canvas.SetTop(element,Canvas.GetTop(element)+e.VerticalChange);
+            Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
+            Canvas.SetTop(element, Canvas.GetTop(element) + e.VerticalChange);
+
+            if (Canvas.GetLeft(element) + element.Width > canvas.ActualWidth)
+            {
+                Canvas.SetLeft(element, canvas.ActualWidth - element.Width);
+            }
+
+            if (Canvas.GetLeft(element) < 10)
+            {
+                Canvas.SetLeft(element, 10);
+            }
+
+            if (Canvas.GetTop(element) < 10)
+            {
+                Canvas.SetTop(element, 10);
+            }
         }
 
         private void ThumbRightBottom_DragDelta(object sender, DragDeltaEventArgs e)

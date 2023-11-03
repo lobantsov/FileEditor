@@ -32,7 +32,7 @@ namespace FileEditor.Classes.ClassForComponents
             richTextBox.Width = 300;
             richTextBox.Height = 25;
             richTextBox.Style = null;
-            richTextBox.FontFamily = new FontFamily("Times New Roman");
+            richTextBox.FontFamily = new System.Windows.Media.FontFamily("Times New Roman");
             richTextBox.FontSize = 12;
             richTextBox.PreviewMouseDown += RichTextBox_MouseDown;
             richTextBox.LostFocus += RichTextBox_LostFocus;
@@ -52,8 +52,8 @@ namespace FileEditor.Classes.ClassForComponents
         {
             double canvasLeft = 0;
             double canvasTop = 0;
-            double canvasWidth = Canvas.ActualWidth; // Отримати ширину
-            double canvasHeight = Canvas.ActualHeight; // Отримати висоту
+            double canvasWidth = Canvas.ActualWidth; 
+            double canvasHeight = Canvas.ActualHeight; 
 
             if (Canvas.GetLeft(richTextBox) < canvasLeft)
             {

@@ -219,7 +219,12 @@
 
             </StackPanel>
                     <ToolBar VerticalAlignment="Top">
-                        <Button Command="Copy" Content="Coppy"/>
+                <Button Click="ButtonBase_OnClick">
+                    <StackPanel>
+                        <Image Source="Resources/floppy.png"/>
+                    </StackPanel>
+                </Button>
+                    <Button Command="Copy" Content="Coppy"/>
                         <Button Command="Paste" Content="Paste"/>
                         <Button Command="Cut" Content="Cut"/>
                         <Button Command="ToggleBold" FontWeight="Bold" Content="B"/>
