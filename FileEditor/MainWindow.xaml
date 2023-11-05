@@ -64,10 +64,41 @@
 
 
 
-        <Grid Name="GridConstruction" Margin="0 25 0 0">
-           
-            <StackPanel Name="SPGridChildren" Grid.Column="1" Orientation="Horizontal">
-                <ToggleButton Name="ToggleButtonText" Width="40" Height="30" VerticalAlignment="Top" Margin="15 30 0 0" >
+        <Grid Name="GridConstruction" Margin="0 25 0 0" Background="LightGray">
+
+            <ToolBar VerticalAlignment="Center" Height="59">
+                <Button Click="ButtonBase_OnClick">
+                    <StackPanel>
+                        <Image Source="Resources/floppy.png"/>
+                    </StackPanel>
+                </Button>
+                <Button Command="Copy" Content="Coppy"/>
+                <Button Command="Paste" Content="Paste"/>
+                <Button Command="Cut" Content="Cut"/>
+                <Button Command="ToggleBold" FontWeight="Bold" Content="B"/>
+                <Button Command="ToggleUnderline" >
+                    <TextBox Name="TBUnderline" TextDecorations="Underline" IsReadOnly="True">U</TextBox>
+                </Button>
+                <Button Command="ToggleItalic" FontStyle="Italic" Content="I"/>
+                <Button Command="ToggleBullets" Content="Buble list"/>
+                <Button Command="ToggleNumbering" Content="Number list"/>
+                <ComboBox Name="CBFontSize" SelectedIndex="0" SelectionChanged="CBFontSize_OnSelectionChanged"/>
+                <Button Name="TBRight" Click="TBRight_OnClick">
+                    <StackPanel>
+                        <Image Source="Resources/PictogramText_Right.png"/>
+                    </StackPanel>
+                </Button>
+                <Button Name="TBCenture" Click="TBRight_OnClick">
+                    <StackPanel>
+                        <Image Source="Resources/PictogramText_Centure.png"/>
+                    </StackPanel>
+                </Button>
+                <Button Name="TBLeft" Click="TBRight_OnClick">
+                    <StackPanel>
+                        <Image Source="Resources/PictogramText_Left.png"/>
+                    </StackPanel>
+                </Button>
+                <ToggleButton Name="ToggleButtonText" Width="40" Height="30" >
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Setter Property="Template">
@@ -91,156 +122,17 @@
                         <Image Name="ImgText" Source="Resources/PitogramText.png" Tag="2"/>
                     </StackPanel>
                 </ToggleButton>
-
-                <ToggleButton Name="ToggleButtonRight" Tag="1" Width="100" Height="30" VerticalAlignment="Top" Margin="20 30 0 0" Click="ToggleButtonRight_OnChecked">
-                    <ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Background" Value="LightGray" />
-                                                <Setter Property="BorderBrush" Value="DarkGray" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="ImgRigth" Source="Resources/PictogramText_Right.png" Width="40" Height="30" Tag="0"/>
-                    </StackPanel>
-                </ToggleButton>
-
-                <ToggleButton Name="ToggleButtonCenture" Tag="1" Width="100" Height="30" VerticalAlignment="Top" Margin="20 30 0 0" Click="ToggleButtonRight_OnChecked" >
-                    <ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Background" Value="LightGray" />
-                                                <Setter Property="BorderBrush" Value="DarkGray" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="ImgCenture" Source="Resources/PictogramText_Centure.png" Width="40" Height="30" Tag="1" />
-                    </StackPanel>
-                </ToggleButton>
-
-                <ToggleButton Name="ToggleButtonLeft" Tag="1" Width="100" Height="30" VerticalAlignment="Top" Margin="20 30 0 0" Click="ToggleButtonRight_OnChecked">
-                    <ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Background" Value="LightGray" />
-                                                <Setter Property="BorderBrush" Value="DarkGray" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="ImgLeft" Source="Resources/PictogramText_Left.png" Tag="2"/>
-                    </StackPanel>
-                </ToggleButton>
-
-                <ToggleButton Name="ToggleButtonSimplList" Tag="2" Width="40" Height="30" VerticalAlignment="Top" Margin="20 30 0 0" Click="ToggleButtonRight_OnChecked" >
-                    <ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Background" Value="LightGray" />
-                                                <Setter Property="BorderBrush" Value="DarkGray" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="ImgSimpleList" Source="Resources/PictogramList.png" Tag="2"/>
-                    </StackPanel>
-                </ToggleButton>
-
-                <ToggleButton Name="ToggleButtonNumberList" Tag="2" Width="40" Height="30" VerticalAlignment="Top" Margin="20 30 0 0" Click="ToggleButtonRight_OnChecked">
-                    <ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
-                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Background" Value="LightGray" />
-                                                <Setter Property="BorderBrush" Value="DarkGray" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Name="ImgNumberList" Source="Resources/PictogramList_Number.png" Tag="2"/>
-                    </StackPanel>
-                </ToggleButton>
-
-            </StackPanel>
-                    <ToolBar VerticalAlignment="Top">
-                <Button Click="ButtonBase_OnClick">
-                    <StackPanel>
-                        <Image Source="Resources/floppy.png"/>
-                    </StackPanel>
-                </Button>
-                    <Button Command="Copy" Content="Coppy"/>
-                        <Button Command="Paste" Content="Paste"/>
-                        <Button Command="Cut" Content="Cut"/>
-                        <Button Command="ToggleBold" FontWeight="Bold" Content="B"/>
-                        <Button Command="ToggleUnderline" >
-                             <TextBox Name="TBUnderline" TextDecorations="Underline" IsReadOnly="True">U</TextBox>
-                        </Button>
-                        <Button Command="ToggleItalic" FontStyle="Italic" Content="I"/>
-                        <Button Command="ToggleBullets" Content="Buble list"/>
-                        <Button Command="ToggleNumbering" Content="Number list"/>
-                <ComboBox Name="CBFontSize" SelectedIndex="0" SelectionChanged="CBFontSize_OnSelectionChanged"/>
             </ToolBar>
-                <Canvas Background="Transparent" Name="Canvas" MouseDown="Canvas_OnMouseDown" Margin="0 60 0 0"/>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="550"/>
-            </Grid.ColumnDefinitions>
+
+            <ScrollViewer Name="CanvasScrollViewer" Grid.Row="1">
+                <Canvas Name="Canvas" Background="White"  MouseDown="Canvas_OnMouseDown" Width="645.67" Height="918.43">
+                </Canvas>
+            </ScrollViewer>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="58*"/>
+                <RowDefinition Height="981*"/>
+            </Grid.RowDefinitions>
         </Grid>
     </Grid>
 </Window>

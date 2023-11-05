@@ -13,6 +13,7 @@ using System.Windows.Media;
 using Xceed.Wpf.Toolkit;
 using Brushes = System.Windows.Media.Brushes;
 using Rectangle = System.Windows.Shapes.Rectangle;
+using RichTextBox = System.Windows.Controls.RichTextBox;
 using Size = System.Windows.Size;
 
 namespace FileEditor.Classes.ClassForComponents
@@ -95,6 +96,9 @@ namespace FileEditor.Classes.ClassForComponents
             {
                 Canvas.SetTop(element, 10);
             }
+            //((RichTextBox)element).Document.Blocks.Clear();
+            //((RichTextBox)element).Document.Blocks.Add(new Paragraph(new Run(Canvas.GetLeft(((RichTextBox)element)).ToString())));
+
         }
 
         private void ThumbRightBottom_DragDelta(object sender, DragDeltaEventArgs e)
@@ -103,7 +107,7 @@ namespace FileEditor.Classes.ClassForComponents
             double canvasWidth = canvas.ActualWidth; // Отримати ширину
             double canvasHeight = canvas.ActualHeight; // Отримати висоту
 
-            //element.Height = element.Height + e.VerticalChange < 0 ? 0 : element.Height + e.VerticalChange;
+            element.Height = element.Height + e.VerticalChange < 0 ? 0 : element.Height + e.VerticalChange;
             element.Width = element.Width + e.HorizontalChange < 0 ? 0 : element.Width + e.HorizontalChange;
             if (Canvas.GetLeft(element) + element.Width > canvasWidth)
             {
@@ -117,11 +121,18 @@ namespace FileEditor.Classes.ClassForComponents
             var element = (FrameworkElement)AdornedElement;
             if(element.Width>0)
             Canvas.SetLeft(element,Canvas.GetLeft(element)+e.HorizontalChange);
-            //if(element.Height>0)
-            //Canvas.SetTop(element,Canvas.GetTop(element)+e.VerticalChange);
+            if (element.Height > 0)
+                Canvas.SetTop(element, Canvas.GetTop(element) + e.VerticalChange);
 
-            //element.Height = element.Height - e.VerticalChange < 0 ? 0 : element.Height - e.VerticalChange;
-            element.Width = element.Width - e.HorizontalChange < 0 ? 0 : element.Width - e.HorizontalChange;
+            element.Height = element.Height - e.VerticalChange < 0 ? 0 : element.Height - e.VerticalChange;
+            if (Canvas.GetLeft(element) > 10)
+            {
+                element.Width = element.Width - e.HorizontalChange < 0 ? 0 : element.Width - e.HorizontalChange;
+            }
+            else
+            {
+                Canvas.SetLeft(element, 10);
+            }
         }
 
         protected override Visual GetVisualChild(int index)

@@ -25,6 +25,8 @@ namespace FileEditor.Classes.ClassForComponents
         public static List<RichTextBoxParagraph> TextBoxParagraphs;
         public static ComboBox ComboBox;
         private bool IsAdded;
+        public object Sender;
+        public string TextAlignment;
 
         public void CreateRichTextBox(System.Windows.Point location)
         {
@@ -39,7 +41,6 @@ namespace FileEditor.Classes.ClassForComponents
             richTextBox.PreviewKeyDown += RichTextBox_PreviewKeyDown;
             Canvas.SetLeft(richTextBox, location.X);
             Canvas.SetTop(richTextBox, location.Y);
-
             ValidateLocatoin();
 
             Canvas.Children.Add(richTextBox);
@@ -86,8 +87,10 @@ namespace FileEditor.Classes.ClassForComponents
             foreach (var VARIABLE in TextBoxParagraphs)
             {
                 VARIABLE.GetAborner().AbornerVisibility(Visibility.Collapsed);
+                VARIABLE.Sender = null;
             }
 
+            Sender = sender;
             ComboBox.SelectedItem = Convert.ToInt32(richTextBox.FontSize);
             objectiv.AbornerVisibility(Visibility.Visible);
         }
@@ -138,7 +141,18 @@ namespace FileEditor.Classes.ClassForComponents
 
             else if (e.Key == Key.Enter)
             {
-
+                //TextRange a = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+                //FormattedText formattedText = new FormattedText(
+                //    "\r",
+                //    CultureInfo.CurrentCulture,
+                //    FlowDirection.LeftToRight,
+                //    new Typeface(richTextBox.FontFamily, richTextBox.FontStyle, richTextBox.FontWeight, richTextBox.FontStretch),
+                //    richTextBox.FontSize,
+                //    System.Windows.Media.Brushes.Black,
+                //    new NumberSubstitution(),
+                //    TextFormattingMode.Display
+                //);
+                //richTextBox.Height += formattedText.Height;
             }
             else
             {

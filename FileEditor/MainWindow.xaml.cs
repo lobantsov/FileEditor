@@ -43,7 +43,6 @@ namespace FileEditor
             CBFontSize.Items.Add(14);
             CBFontSize.Items.Add(16);
             CBFontSize.SelectedIndex = 0;
-
         }
 
 
@@ -88,31 +87,6 @@ namespace FileEditor
         private void TBSearch_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             ByModerator.SearchInGrid(TBSearch.Text);
-        }
-
-        void ToggleButtonsOfLikeRadioButtons(object sender)
-        {
-            switch (((ToggleButton)sender).Tag.ToString())
-            {
-                case "1":
-                    ToggleButtonCenture.IsChecked = false;
-                    ToggleButtonLeft.IsChecked = false;
-                    ToggleButtonRight.IsChecked = false;
-                    ((ToggleButton)sender).IsChecked = true;
-                    break;
-
-
-                case "2":
-                    ToggleButtonSimplList.IsChecked = false;
-                    ToggleButtonNumberList.IsChecked = false;
-                    ((ToggleButton)sender).IsChecked = true;
-                    break;
-            }
-        }
-
-        private void ToggleButtonRight_OnChecked(object sender, RoutedEventArgs e)
-        {
-            ToggleButtonsOfLikeRadioButtons(sender);
         }
 
         private void Canvas_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -162,6 +136,46 @@ namespace FileEditor
                 .SelectMany(paragraph => new[] { paragraph.richTextBox })
                 .ToList());
         }
-    }
 
+        private void TBRight_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).Name == "TBRight")
+            {
+                foreach (var VARIABLE in TextBoxParagraphs)
+                {
+                    if (VARIABLE.Sender != null)
+                    {
+                        Canvas.SetLeft(((RichTextBox)VARIABLE.Sender),
+                            (Canvas.Width / 2) - ((RichTextBox)VARIABLE.Sender).Width);
+                        VARIABLE.TextAlignment = "Right";
+                        break;
+                    }
+                }
+            }
+            else if(((Button)sender).Name == "TBLeft")
+            {
+                foreach (var VARIABLE in TextBoxParagraphs)
+                {
+                    if (VARIABLE.Sender != null)
+                    {
+                        Canvas.SetLeft(((RichTextBox)VARIABLE.Sender),
+                            Canvas.Width - ((RichTextBox)VARIABLE.Sender).Width);
+                        VARIABLE.TextAlignment = "Left";
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var VARIABLE in TextBoxParagraphs)
+                {
+                    if (VARIABLE.Sender != null)
+                        Canvas.SetLeft(((RichTextBox)VARIABLE.Sender),
+                            (Canvas.Width / 2) - ((RichTextBox)VARIABLE.Sender).Width / 2);
+                    VARIABLE.TextAlignment = "Centure";
+                    break;
+                }
+            }
+        }
+    }
 }

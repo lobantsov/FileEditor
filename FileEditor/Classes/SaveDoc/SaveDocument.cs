@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Win32;
 using Xceed.Words.NET;
 using System.Windows.Controls;
@@ -10,6 +11,10 @@ using Paragraph = System.Windows.Documents.Paragraph;
 using List = System.Windows.Documents.List;
 using System.Windows;
 using Xceed.Document.NET;
+using System.Globalization;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using FormattedText = System.Windows.Media.FormattedText;
 
 namespace FileEditor.Classes.SaveDoc
 {
@@ -54,6 +59,7 @@ namespace FileEditor.Classes.SaveDoc
                                     }
                                 }
                             }
+                            AddSpaces(docXParagraph, GetSpaceCount(richText),0);
                         }
                     }
 
@@ -62,12 +68,36 @@ namespace FileEditor.Classes.SaveDoc
             }
         }
 
+        private int GetSpaceCount(RichTextBox richTextBox)
+        {
+            char a = ' ';
+            TextRange text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+            FormattedText formattedText = new FormattedText(
+                a.ToString(),
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                new Typeface(richTextBox.FontFamily, richTextBox.FontStyle, richTextBox.FontWeight, richTextBox.FontStretch),
+                richTextBox.FontSize,
+                Brushes.Black,
+                new NumberSubstitution(),
+                TextFormattingMode.Display
+            );
+            return Convert.ToInt32(Canvas.GetLeft(richTextBox) / formattedText.WidthIncludingTrailingWhitespace);
+        }
+
+        private void AddSpaces(Xceed.Document.NET.Paragraph paragraph, int numberOfSpaces, int index)
+        {
+            string newText = new string(' ', numberOfSpaces);
+            paragraph.InsertText(index,newText);
+            paragraph.AppendLine();
+        }
+
         private void SetFontSetings(Block paragraph, Xceed.Document.NET.Paragraph docXParagraph)
         {
             foreach (Run run in ((Paragraph)paragraph).Inlines.OfType<Run>())
             {
                 TextRange a = new TextRange(run.ContentStart, run.ContentEnd);
-                docXParagraph.AppendLine(a.Text);
+                docXParagraph.Append(a.Text);
                 var fontFamily = run.FontFamily;
                 var fontSize = run.FontSize;
                 var foreground = run.Foreground;
